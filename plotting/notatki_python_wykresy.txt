@@ -1,0 +1,326 @@
+import matplotlib.pyplot as plt 
+
+Podstawowe rysowanie 
+
+	plt.plot(t, temperature, 'r') 	# rysuje wykres temperature(t), na czerwono (red)
+	plt.plot(t, dewpoint, 'b')		# rysuje na tym samym wykresie dewpoint(t) na niebiesko (blue)
+									# mozna tez uzyc: color = 'blue'
+	plt.xlabel('Date') 				# opis osi xlabel
+	plt.title('Temperature and Dew Point')
+	plt.show()						# wyswietla wykres 
+
+
+Tworzenie własnych osi
+	plt.axes([0.05,0.05, 0.425, 0.9])	# Tworzy pierwsza os
+	plt.plot(t, temperature, 'r')
+	plt.xlabel('Date')
+	plt.title('Temperature')			# wszystko powyzej jest rysowane na 1. osi 
+	
+	plt.axes([0.525,0.05,0.425,0.9])	# Tworzy druga os, wszystko ponizej jest rysowane na niej
+	plt.plot(t,dewpoint, 'b')
+	plt.xlabel('Date')
+	plt.title('Dew Point')
+	
+	plt.show()
+	# Całość powyzej tworzy dwa wykresy obok siebie, z osobnymi osiami. 
+	
+	plt.axes([left, bottom, width, height])	# wartosci od 0 do 1, skalowane do rozmiaru wykresu
+		# left, bottom - wspolrzedne startu osi  
+		# width - szerokosc osi, height - wysokosc osi 
+		
+		
+	Proste ustawianie co ile ma byc wartosc na osi x: 
+		plt.gca().xaxis.set_major_locator(plt.MultipleLocator(4)) 	# tutaj co 4
+		
+		
+Subplot 
+	plt.subplot(number_of_rows, number_of_cols, plot_number)
+	
+	plt.subplot(2,1,1)	# wybiera wykres nr 1 (liczac od gory od lewej)
+	plt.plot(t, temperature, 'r')
+	plt.xlabel('Date')
+	plt.title('Temperature')
+	
+	plt.subplot(2,1,2)	# wybiera wykres nr 2
+	plt.plot(t, dewpoint, 'b')
+	plt.xlabel('Date')
+	plt.title('dewpoint')
+	
+	plt.tight_layout()		# rzekomo poprawia wyswietlanie, ja nie widze roznicy 
+	plt.show()
+	
+Kontrolowanie konkretnych osi: 
+	axis([xmin, xmax, ymin, ymax]) 	
+	# albo: 
+	xlim([xmin, xmax])
+	ylim([ymin, ymax])
+	
+	#inne opcje: 
+	axis('off')		# wylacza linie osi i etykiety 
+	axis('equal') 	# rowne skalowanie obu osi 
+	axis('square')	# wymusza kwadratowy wykres 
+	axis('tight') 	# ustawia limity takie, by pokazac wszystkie dane (i nie wiecej)
+	
+	\n w tekscie przechodzi do kolejnej linijki (np. w tytule wykresu)
+	
+	Zapisywanie: 
+		plt.savefig('nazwa.png')	# uwaga, savefig musi byc przed plt.show, bo plt.show "czysci" wykres / "zeruje" go
+	
+legendy, annotacje i style 
+
+	każda seria powinna mieć label = 'nazwa'
+	plt.legend(loc = 'lokalizacja na wykresie')		# opcje: 'upper/center/lower right/left', albo: 'right / best'
+	
+	annotate('tekst', xy=(x,y))) # x,y wspolrzedne tekstu na wykresie
+		xytext(x,y) 			 # wspolrzedne tekstu 
+		arrowprops				 # do kontroli strzalki, wymagane zeby byla strzalka. np: arrowprops = {'color':'red'} 
+		
+		# Add a black arrow annotation
+		plt.annotate('Maximum',xy=(yr_max,cs_max), arrowprops = dict(facecolor='black') )
+		
+		
+	plt.style.use('nazwa')
+	
+
+Wykresy 2 zmiennych (3D) 	
+	lista[indeks]
+	lista_2D[indeks1, indeks2]
+	
+	slice: lista[slice]
+		slice = start:stop:stride 	# Tak jak z listami, slice zatrzymuje sie 1 przed wartością stop
+			stride - domyślnie 1
+			ujemne wartości liczą od końca 
+			
+			
+	meshgrid	(numpy)
+		u = np.linspace(-2,2,3)				# np.linspace(start,stop,num) # num okresla liczbe próbek, domyslnie 50
+		v = np. linspace(-1,1,5)
+		X,Y = np.meshgrid(u,v)
+	
+		Z = X**2/25 + Y**2/4
+		
+		print(Z)
+		plt.set_cmap('gray')
+		plt.pcolor(Z)				# w tym przypadku na osiach będą indeksy, a nie wartosci X, Y
+		
+		plt.pcolor(X, Y, Z) 		# na osiach będą X, Y
+		
+		plt.show()
+		
+		orientacja na wykresie 2D: 
+			numeracja pikseli zaczyna sie od zera i leci w prawo i potem w gore (tj, zaczyna od (0,0)
+		
+		linspace(range(10),range(20)) # tworzy array o ksztalcie (20,10), tj 20 x 10 
+		
+	Skala
+		plt.colorbar()
+	
+	Kolory
+		plt.pcolor(Z, cmap = 'gray') # skala szarosci, rozne opcje
+		
+		
+	Kontury 
+		plt.contour(Z, liczba_konturow) 		# wykres konturowy, puste w środku 
+			lub: 
+		plt.contour(X,Y,Z, liczba_konturow)		# konturowy, z x,y na osiach
+		
+		plt.contourf(X,Y,Z,liczba konturow)		# wypełnione kontury 
+		
+		
+	Histogramy 2D
+	
+		counts, bins, patches = plt.hist(x,bins = ileś)	#histogram 1D
+
+		Histogramy 2D mogą mieć bardziej fantazyjne ksztalty 'koszyków', np. prostokąty, plaster miodu 
+		
+			plt.hist2d(x,y, bins = (nx,ny), range = ((xmin,xmax), (ymin,ymax)))
+			
+			plt.hexbin(x,y, gridsize =(nx,ny), extent=(xmin,xmax,ymin,ymax))
+			
+			
+Obrazy
+	W skali szarości: 2D array
+	Kolorowe: 3 x 2D array ( RGB - 3 kanaly) 
+		
+		img = plt.imread('sciezka.jpg')
+		print(img.shape)	 # wyswietla ksztalt arraya? 
+		plt.imshow(img)		 # wyswietla obraz 
+		plt.axis('off')		 # bez osi
+		
+	konwersja RGB -> szary 
+		collapsed = img.mean(axis=2) # liczymy srednia z RGB 
+	
+	analiza jasnosci
+		intensity = img.sum(axis=2)	 # liczy sume po RGB 
+			# po wyswietleniu w skali szarosci tez jest czarno-biale
+		
+	wycinek
+		uneven = collapsed[::4,::2]		# wez co 4 wiersz po x i co 2 po y -  
+		plt.imshow(uneven) 				# daje scisniety obrazek
+		plt.imshow(uneven, aspect = 2.0)# daje normalny obrazek, ale w mniejszej rozdzielczosci (bo zachowany jest stosunek x/y)
+		
+		# to samo co aspect = 2.0 mozna uzsykac robiac: 
+		plt.imshow(uneven, cmap = 'gray', extent =(0,640,0,480))
+		
+	
+	rescaling (jeśli obraz jest malo wyrazny / rozmyty (nie ma wartosci skrajnych) mozna przeskalowac kolorki na wiekszy zakres 
+		pmin, pmax = image.min(), image.max()
+		rescaled_image = 256*(image - pmin) / (pmax - pmin)
+		plt.imshow(rescaled_image)		# znacznie ostrzejszy niz oryginal 
+		
+
+Regresje 
+	Seaborn (biblioteka do wizualizacji danych statystycznych) (nadbudówka nad matplotlib)
+		najlepiej działa z pandasem
+			pandas:
+				tabele z nazwami rzędów (index) i kolumn (columns) columns - pandas Series
+		
+	
+		import pandas as pd
+		import matplotlib.pyplot as plt
+		import seaborn as sns 
+		
+		tips = sns.load_dataset('tips')	# wczytanie danych seabornem
+		
+		sns.lmplot( x = 'total_bill', y = 'tip', data = tips)  
+			# lmplot - laczy regplot() + FaceGrid -> rysuje wykres z dopasowana regresja 
+			# opcjonalne: hue = 'factor_name' - 2 kolorki po kategorii
+			# palette = 'Set1' - kolorki 
+			
+			# alternatywnie, zamiast hue, col (lub row) = 'factor_name' -> daje wykresy obok siebie, dla roznych wartosci kategorii
+			
+		plt.show()
+		
+		# wykres reszt z regresji: 
+			sns.residplot(x='age', y='fare', data = tips, color ='indianred') # color opcjonalny 
+		
+		# sns.regplot dziala podobnie co lmplot, ale jest bardziej ogolny
+			# lmplot nie pozwala na zdefiniownaie kolorku przez color, regplot juz takie
+			# rząd regresjesji, argument order = 1/2/8 etc 
+			# jeśli testuje kilka rzędów, przy kolejnych warto dodać scatter = None, punkty nie beda wyswietlane wielokrotnie
+			
+		
+Wizualizacja rozkładów 
+	Univariative ( one variable) 
+		Strip plots, 		sns.stripplot(y='tip', data = tips), jeśli dodamy x = 'day' dostaniemy kilka rozkladow wg wartosci 'day' 
+							domyślnie punkty się pokrywają, żeby nie, size = 4, jitter = True # jitter rozrzuca troche wartosci lewo/prawo)
+		swarm plots			podobny do strip plot, ale powtarzajace sie wartosci umieszcza obok siebie a nie jedno na drugim 
+							sns.swarmplot(x = 'day', y='tip', data = tips) # można dodać też hue = 'category', żeby podzielić kolorki wg 
+							jak jest sporo wykresów można zmienić orient ='h' lub 'v' (horizontal / veritical)
+		violin plots 		prawie jak box plot, ale pokazuje wizualnie rozkład 
+								plt.subplot(1,2,1)
+								sns.boxplot(x = 'day', y='tip', data = tips)
+								plt.subplot(1,2,2)
+								sns.violinplot(x='day', y='tip', data = tips)
+								
+		Można nakładać różne wykresy dystrybucji na siebie! 
+			sns.violinplot(x = 'day', y='tip', data = tips, inner = None, color ='lightgray')
+			sns.stripplot(x='day, y='tip', data=tips, size = 4, jitter = TRUE) 
+			plt.ylabel('tip ($)')
+			plt.show
+			
+	Multivariative (rozkłady wielu zmiennych) 
+		joint plots (scatter + histogramy x i y + wsp. korelacji) 
+			sns.joinplot( x = 'total_bill', y = 'tip', data = tips)
+				kind = 'kde' 	# daje gładkie powierzchnie / krzywe zamiast punktów / histogramów
+					kind = 'scatter' - domyslne, 	reg - dodaje regresje (order = n zmienia rząd)
+					resid - residua po regresji (też da się zmienić rząd),	 hex - podobnie jak kde ale heksagony a nie gładkie 
+						
+		pair plots	- chyba każda zmienna (numeryczna) vs każda 
+			sns.pairplot(tips)	
+				hue = 'category' # do dalszego podziału, można też dodać kind = 'reg' 
+				
+		heat maps - wyświetla tabelkę / macierz w formie kolorków 
+
+			Heat map z tylko jedna czescia wykresu (dla macierzy korelacji): 
+				mask = np.zeros_like(corr_matrix)				# tworzy macierz samych zer
+				mask[np.triu_indices_from(mask)] = True			# zostawia same zera powyzej przekatnej macierzy 
+
+				with sns.axes_style('white'):
+					f,ax = plt.subplots(figsize=(15,10))
+					ax= sns.heatmap(corr_matrix, mask=mask,vmin=-1, vmax=1, cmap='RdBu', linewidth =.1)
+						# vmin, vmax ustawia zakres, cmap kolorki, linewidth dodaje biale linie miedzy polami
+
+		Macierz korelacji
+			corr_matrix = data_frame.corr()		# data frame musi byc obiektem pandasa
+						
+Time series	
+	pandas 
+		ma dostępny typ danych datetime, może być użyty jako indeks 
+			slicing: 
+				seria['2010-07-04']				# wszystkie dane od tej daty
+				seria['2010-03' : '2010-04'] 	# daty z zakresu 
+				seria['2010-05']				# daty z maja 2010
+				
+				Uwaga! Inaczej niż domyślnie w pythone, slice w pandas zawiera końcowy element!
+	Wykresy: 
+		plt.plot(temperature['2010-01'], 
+					color = 'red', 
+					label = 'Temperature')
+		dew point = weather['DewPoint']
+		plt.plot(dewpoint['2010-01'], 
+					color = 'blue', 
+					label = 'Dewpoint')
+		plt.legend(loc = 'upper right')
+		plt.xticks(rotation = 60)			# obrócenie etykiet osi x o 60 stopni 
+		
+		jan = temperature['2010-01']
+		dates = jan.index[::96]				# wybiera co 96ty element, przy danych co godzinę to da godzinę na początku co 4tego dnia
+		
+		labels = dates.strftime('%b %d')	# ładnie formatuje dane ( Jan 01, Jan 05 etc) 
+		
+		żeby uzyć przygotowanych labelow: 
+			plt.xticks(dates, labels, rotation = 60) 
+			
+			
+Histogram equalization
+	Jeśli kolory pikseli zajmują tylko pewien obszar zakresu (np 100-250, z zakresu 0-256), 
+		to mozna podbic kontrast rozciagajac zakres wartosci na caly dostepny zakres
+		
+		orig = plt.imread('low-contrast-moon.jpg')
+		
+		pixels = orig.flatten()		# Zamienia macierz 2D na macierz 1D
+		
+		plt.hist(pixels, bins = 256, range =(0,256), normed = True, alpha=0.3)
+			# normed = True przeskalowuje slupki tak, by calkowita powierzchnia wykresu byla = 1
+			# alpha = 0.3 sprawia, ze slupki sa troche przezroczyste 
+			
+		minval, maxval = orig.min(), orig.max()	# min, max z oryginalu 
+		rescaled = (255/(maxval-minval)) * (pixels - minval)
+			
+	Cumulative Distribution Function (suma pól pod wykresem) 
+		Kod żeby narysować histogram i CDF na jednym : 
+
+			plt.hist(zmienna, bins=, range=(,), normed = True, color =, alpha = 0.3)
+			
+			plt.twinx()			# Pozwala miec 2 rozne osi y dla jednej osi x 
+			
+			plt.hist(zmienna, bins=, range=(,), normed = True, color =, alpha = 0.3, cumulative = True)
+			
+			
+		Poprawianie obrazu z wykorzystaniem histogramu, CDF i interpolacji	
+			plt.hist(pixels, bins = 256, range=(0,256), normed = True, color='blue', alpha=0.3)
+			plt.twinx()
+			orig_cdf, bins, patches = plt.hist(pixels, cumulative = True, bins = 256, range = (0,256),
+				normed=True, color='red', alpha=0.3
+			plt.title('')
+			plt.xlim((0,255))
+			plt.show()
+			
+			new_pixels = np.interp(pixels, bins[:-1], orig_cdf*255)
+			new = new_pixels.reshape(orig.shape)
+			plt.imshow(new)
+			plt.axies('off')
+			plt.title('Equalized image')
+			plt.show
+				
+	
+	Histogramy z obrazu dla RGB
+		# Extract 2-D arrays of the RGB channels: red, green, blue
+			red, green, blue = image[:,:,0], image[:,:,1], image[:,:,2
+		
+		# Flatten the 2-D arrays of the RGB channels into 1-D
+			red_pixels = red.flatten()
+			green_pixels = green.flatten()
+			blue_pixels = blue.flatten()
+			
