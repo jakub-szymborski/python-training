@@ -55,8 +55,15 @@ Write a drawPyramid() function with a height parameter. The top of the pyramid h
 centered hashtag character, and the subsequent rows have two more hashtags than the previous row.
 The number of rows matches the height integer   
 """
-   
-   
+ 
+def drawPyramid(height):
     
+    if height < 1:
+        print('')
+
+    for i in range(height):
+        print(' ' * (height-i-1) + '#'+ '#'*(2*i))
     
-    
+drawPyramid(12)    
+
+
