@@ -13,7 +13,9 @@ class Ship():
         self.screen = screen 
         
         # load ship image 
-        self.image = pygame.image.load("images/statek.png")
+        self.image = pygame.image.load("images/statek2.png")
+        self.image = pygame.transform.scale(self.image, (70,101))   # statek2: 100 x 144
+
         # ship coords 
         self.rect = self.image.get_rect()
         self.screen_rect = screen.get_rect()
