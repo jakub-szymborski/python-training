@@ -3,6 +3,9 @@
 Created on Fri Oct 27 21:42:35 2023
 
 @author: Kuba
+
+Class names should be in CamelCaps 
+Instances and module names should be lowercase with _between_words
 """
 
 class Dog():
