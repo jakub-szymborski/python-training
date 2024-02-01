@@ -2,7 +2,7 @@
 """
 Created on Fri Jan  5 12:10:37 2024
 
-@author: Kuba
+@author: Jakub Szymborski, based on Crash Course 
 """
 import pygame
 from settings import Settings 
