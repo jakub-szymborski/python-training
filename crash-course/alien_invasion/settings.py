@@ -16,20 +16,20 @@ class Settings():
         self.bg_color = (130,130,130)
         
         # bullet settings
-        self.bullet_width = 300
+        self.bullet_width = 3
         self.bullet_height = 15
         self.bullet_color = (255,255,153)
         self.bullets_allowed = 13
         
         # aliens
         self.alien_spacing = 2
-        self.fleet_drop = 100
+        self.fleet_drop = 10
         
         # ship settings 
-        self.ship_limit = 1
+        self.ship_limit = 2
         
         # difficulty 
-        self.speedup = 2
+        self.speedup = 1.15
         self.initialize_dynamic_settings()
         
         # high score file 
