@@ -2,3 +2,5 @@
 *.svg
 
 
+learning_log_django/learn_env/Lib/site-packages/
+learning_log_django/learn_env/Scripts/learning_log/settings.py

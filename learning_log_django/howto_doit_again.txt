@@ -1,0 +1,53 @@
+How to set up django project in a virtual environment:
+	1. Create empty folder for your project 
+	2. Create new virtual environment:
+		a. Open command prompt in this folder 
+			cmd: to change disk type D: 
+				 to change path in a disk, type cd 'path' 	
+				 to list elements type DIR 
+			i. in cmd in wanted folder type: 
+				python -m venv env_name 
+		b. new folders should get created: include, Lib, Scripts
+		c. inside cmd, go to Scripts, and from cmd run Scripts/activate to start the v. env. 
+	3. Inside v. env. install Django: 
+		in cmd, loc as before: pip install Django 
+		
+	4. Create new project in Django: 
+		in cmd, Scripts/ : django-admin.py startproject project_name .
+			(without the dot, new folde is created with manage.py, and in that fodler another folder with files, 
+			with dot at the end, manage.py is created in /Scripts, and project folder containing project files.
+
+	5. Create SQLite database: 
+		in cmd: python manage.py migrate
+		a. run db server: 
+			python manage.py runserver 
+				check http://127.0.0.1:8000/ or localhost:8000 to see if it started properly 
+				
+				
+Starting an app: 
+	open new cmd window, go to /Scripts 
+	1. activate v. env. in this open: 
+		a. scripts/activate 
+	2. python manage.py startapp app_name 	# app_name cannot be the same as project_name name 
+		this should create new folder named app_name
+	
+	3. Create data models (classes) in app_name/models.py 
+	4. in project_name/settings:	
+		add app_name to 'installed_apps'
+		
+	5. prepare migration for db by: 
+		a. python manage.py makemigrations app_name 	# this prepares migration process
+		b. python manage.py migrate 					# this does the migrating 
+		
+	* every time you want to modify the data that project manages, you do: 
+		1. modify models.py, call makemigrations, call migrate 
+		
+Register admin user 
+	python manage.py createsuperuser 
+	username
+	password
+	
+	register topic as admin: 
+		in app_name/admin.py: 
+		from app_name.models import Topic
+		admin.site.register(Topic)
