@@ -3,7 +3,7 @@
 
 title: All My Scripts
 author: Jakub Szymborski
-logo: logo.jpg
+logo: logo.png
 
 # Force re-execution of notebooks on each build.
 # See https://jupyterbook.org/content/execute.html
