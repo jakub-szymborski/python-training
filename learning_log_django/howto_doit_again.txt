@@ -51,3 +51,6 @@ Register admin user
 		in app_name/admin.py: 
 		from app_name.models import Topic
 		admin.site.register(Topic)
+		
+		
+	

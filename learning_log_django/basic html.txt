@@ -1,0 +1,24 @@
+<p> this is a paragraph </p> 
+
+
+<a href = "link_url"> link text </a>
+
+template tag (for links): {% %}
+	{% url 'learning_log_app:index' %} 	generates a URL matching pattern defined in learning_log_app/urls.py
+
+block tag, to be filled with content: 
+	{% block content%} {%endblock content %}
+	
+{% extends "path" %} 	- inherits from template at path
+
+bullet list / unordered list: 
+	<ul>
+		item
+		item
+	</ul> 
+
+ordered list: 
+	<li>
+		items
+	</li>
+	
