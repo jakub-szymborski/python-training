@@ -24,7 +24,7 @@ How to set up django project in a virtual environment:
 				check http://127.0.0.1:8000/ or localhost:8000 to see if it started properly 
 				
 				
-Starting an app: 
+Starting an app the first time: 
 	open new cmd window, go to /Scripts 
 	1. activate v. env. in this open: 
 		a. scripts/activate 
@@ -41,6 +41,14 @@ Starting an app:
 		
 	* every time you want to modify the data that project manages, you do: 
 		1. modify models.py, call makemigrations, call migrate 
+
+Starting an app afterwards: 
+	open new cmd window, go to /Scripts 
+	1. activate v. env. in this window: 
+		a. scripts/activate 	
+	2. in the same cmd window: 
+		a. python manage.py runserver 
+		now, under localhost:8000, the app should be available 
 		
 Register admin user 
 	python manage.py createsuperuser 
