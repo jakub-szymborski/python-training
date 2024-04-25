@@ -60,5 +60,14 @@ Register admin user
 		from app_name.models import Topic
 		admin.site.register(Topic)
 		
-		
+	
+loop for creating pages/features:
+	eg. allowing users to add new entries to created topics:
+	
+	0. Create code for the feature/page 
+		new class in forms.py
+	1. Define a URL
+	2. Write a view function 
+	3. Write html page template
+	4. Link to the page 
 	
